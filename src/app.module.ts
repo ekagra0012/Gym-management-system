@@ -8,6 +8,9 @@ import { AuthModule } from './auth/auth.module';
 import { MembersModule } from './members/members.module';
 import { TrainersModule } from './trainers/trainers.module';
 import { MembershipPlansModule } from './membership-plans/membership-plans.module';
+import { SubscriptionsModule } from './subscriptions/subscriptions.module';
+import { AttendanceModule } from './attendance/attendance.module';
+import { PaymentsModule } from './payments/payments.module';
 
 @Module({
   imports: [
@@ -35,6 +38,9 @@ import { MembershipPlansModule } from './membership-plans/membership-plans.modul
     MembersModule,
     TrainersModule,
     MembershipPlansModule,
+    SubscriptionsModule,
+    AttendanceModule,
+    PaymentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
