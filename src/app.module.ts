@@ -11,6 +11,7 @@ import { MembershipPlansModule } from './membership-plans/membership-plans.modul
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { AttendanceModule } from './attendance/attendance.module';
 import { PaymentsModule } from './payments/payments.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { PaymentsModule } from './payments/payments.module';
     SubscriptionsModule,
     AttendanceModule,
     PaymentsModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [AppService],
