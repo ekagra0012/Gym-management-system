@@ -1,17 +1,16 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { MembersModule } from './members/members.module';
-import { TrainersModule } from './trainers/trainers.module';
-import { MembershipPlansModule } from './membership-plans/membership-plans.module';
-import { SubscriptionsModule } from './subscriptions/subscriptions.module';
-import { AttendanceModule } from './attendance/attendance.module';
-import { PaymentsModule } from './payments/payments.module';
-import { DashboardModule } from './dashboard/dashboard.module';
+import { RequestIdMiddleware } from './common/middleware/request-id.middleware';
+
+import { WorkoutPlansModule } from './workout-plans/workout-plans.module';
+import { AvailabilityModule } from './availability/availability.module';
+import { BookingsModule } from './bookings/bookings.module';
+import { ClientsModule } from './clients/clients.module';
 
 @Module({
   imports: [
@@ -36,15 +35,18 @@ import { DashboardModule } from './dashboard/dashboard.module';
     }),
     UsersModule,
     AuthModule,
-    MembersModule,
-    TrainersModule,
-    MembershipPlansModule,
-    SubscriptionsModule,
-    AttendanceModule,
-    PaymentsModule,
-    DashboardModule,
+
+    WorkoutPlansModule,
+    AvailabilityModule,
+    BookingsModule,
+    ClientsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RequestIdMiddleware).forRoutes('*');
+  }
+}
+
