@@ -1,3 +1,8 @@
+import * as crypto from 'crypto';
+if (!globalThis.crypto) {
+  Object.assign(globalThis, { crypto: { randomUUID: crypto.randomUUID } });
+}
+
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, Logger } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -37,20 +42,17 @@ async function bootstrap() {
 
   // Swagger Documentation Setup
   const config = new DocumentBuilder()
-    .setTitle('Gym Management API')
+    .setTitle('WellVantage Gym Management API')
     .setDescription(
-      'Comprehensive gym management platform supporting Members, Trainers, Subscriptions, Attendance, and Payments.',
+      'Backend API for WellVantage — a gym trainer management platform. Supports 5 core screens: Sign Up, Workout List, Add Workout Plan, Set Availability, and Book Client Slots.',
     )
     .setVersion('1.0')
     .addBearerAuth()
-    .addTag('Authentication', 'Signup, login, and JWT token management')
-    .addTag('Members', 'Member profile management')
-    .addTag('Trainers', 'Trainer profiles and specializations')
-    .addTag('Membership Plans', 'Management of billing plans and packages')
-    .addTag('Subscriptions', 'Linkages between members and plans')
-    .addTag('Attendance', 'Check-in and check-out tracking')
-    .addTag('Payments', 'Transaction records and tracking')
-    .addTag('Dashboard', 'Admin analytics and aggregated statistics')
+    .addTag('Authentication', 'Register, login, and Google OAuth')
+    .addTag('Workout Plans', 'Custom and prebuilt workout plan management')
+    .addTag('Clients', 'Client records owned by a trainer (not independent users)')
+    .addTag('Availability', 'Trainer calendar slot scheduling')
+    .addTag('Bookings', 'Book clients into available trainer slots')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
