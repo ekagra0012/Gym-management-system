@@ -29,6 +29,9 @@ export class User {
   })
   role: UserRole;
 
+  @Column({ type: 'varchar', nullable: true })
+  refreshToken: string | null;
+
   @CreateDateColumn()
   createdAt: Date;
 

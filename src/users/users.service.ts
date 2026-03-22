@@ -105,4 +105,13 @@ export class UsersService {
   async findAll(): Promise<User[]> {
     return this.userRepository.find({ order: { createdAt: 'DESC' } });
   }
+
+  async setRefreshToken(id: string, refreshToken: string): Promise<void> {
+    const hashedToken = await bcrypt.hash(refreshToken, 10);
+    await this.userRepository.update(id, { refreshToken: hashedToken });
+  }
+
+  async removeRefreshToken(id: string): Promise<void> {
+    await this.userRepository.update(id, { refreshToken: null });
+  }
 }
