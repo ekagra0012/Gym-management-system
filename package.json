@@ -18,12 +18,12 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "seed:run": "ts-node src/database/seeds/seed.ts",
-    "seed": "node --loader ts-node/esm src/seed/run-seed.ts",
-    "typeorm": "ts-node ./node_modules/typeorm/cli",
-    "migration:generate": "npm run typeorm -- -d ./src/config/typeorm.config.ts migration:generate",
-    "migration:run": "npm run typeorm -- -d ./src/config/typeorm.config.ts migration:run",
-    "migration:revert": "npm run typeorm -- -d ./src/config/typeorm.config.ts migration:revert"
+    "seed:run": "ts-node src/seed/run-seed.ts",
+    "seed": "npm run build && node dist/seed/run-seed.js",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli",
+    "migration:generate": "npm run typeorm -- -d ./src/database/typeorm.config.ts migration:generate",
+    "migration:run": "npm run typeorm -- -d ./src/database/typeorm.config.ts migration:run",
+    "migration:revert": "npm run typeorm -- -d ./src/database/typeorm.config.ts migration:revert"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -40,12 +40,14 @@
     "google-auth-library": "^10.6.2",
     "helmet": "^8.1.0",
     "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.1",
     "pg": "^8.20.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "swagger-ui-express": "^5.0.1",
-    "typeorm": "^0.3.28"
+    "typeorm": "^0.3.28",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -57,8 +59,10 @@
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.10.7",
+    "@types/passport-google-oauth20": "^2.0.17",
     "@types/passport-jwt": "^4.0.1",
     "@types/supertest": "^6.0.2",
+    "@types/uuid": "^10.0.0",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.2",

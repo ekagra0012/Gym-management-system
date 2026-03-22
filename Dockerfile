@@ -4,5 +4,7 @@ COPY package*.json ./
 RUN npm ci
 COPY . .
 RUN npm run build
+COPY entrypoint.sh ./entrypoint.sh
+RUN chmod +x entrypoint.sh
 EXPOSE 3000
-CMD ["sh", "-c", "npm run migration:run && npm run seed && npm run start:prod"]
+ENTRYPOINT ["sh", "entrypoint.sh"]

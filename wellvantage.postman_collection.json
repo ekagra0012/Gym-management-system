@@ -1,0 +1,196 @@
+{
+  "info": {
+    "name": "WellVantage Gym Management API",
+    "description": "API collection for WellVantage Gym Management System powering the 5 strict screens: Google Auth, Workout Plans, Add Plans, Availability, and Bookings.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register PT",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"pt@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"pt\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"pt@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Google OAuth Callback (Browser)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/auth/google",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "auth", "google"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Workout Plans",
+      "item": [
+        {
+          "name": "Get All Plans",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{jwt_token}}", "type": "string" }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/workout-plans",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "workout-plans"]
+            }
+          }
+        },
+        {
+          "name": "Create Workout Plan",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{jwt_token}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Hypertrophy Focus - 4 Days\",\n  \"notes\": \"Ensure adequate protein intake and sleep minimum 8 hours.\",\n  \"workoutDays\": [\n    {\n      \"dayNumber\": 1,\n      \"name\": \"Upper Body Power\",\n      \"exercises\": [\n        {\n          \"name\": \"Barbell Bench Press\",\n          \"sets\": 5,\n          \"reps\": \"5\",\n          \"orderIndex\": 1\n        }\n      ]\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/workout-plans",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "workout-plans"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Availability & Bookings",
+      "item": [
+        {
+          "name": "Create Availability Slots",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{jwt_token}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"date\": \"2026-04-01\",\n  \"startTime\": \"09:00\",\n  \"endTime\": \"10:00\",\n  \"sessionName\": \"Morning Power Hour\",\n  \"repeatSessions\": true,\n  \"repeatDates\": [\"2026-04-02\", \"2026-04-03\"]\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/availability",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "availability"]
+            }
+          }
+        },
+        {
+          "name": "Get Availability",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{jwt_token}}", "type": "string" }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/availability",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "availability"]
+            }
+          }
+        },
+        {
+          "name": "Book a Slot (Client)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{jwt_token}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"availabilityId\": \"INSERT_UUID_HERE\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/bookings",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "bookings"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

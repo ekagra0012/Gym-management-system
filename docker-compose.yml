@@ -28,7 +28,10 @@ services:
       DB_PASSWORD: postgres
       DB_NAME: wellvantage
       JWT_SECRET: supersecretkey
-      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      JWT_EXPIRES_IN: 7d
+      NODE_ENV: production
+      GOOGLE_CLIENT_ID: your_google_client_id
+      GOOGLE_CLIENT_SECRET: your_google_client_secret
       PORT: 3000
     depends_on:
       db:
