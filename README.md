@@ -359,13 +359,16 @@ GOOGLE_CALLBACK_URL=http://localhost:3000/api/auth/google/callback
 - Node.js version >= `20`
 - PostgreSQL version `>= 15`
 - Docker (optional)
+- Expo CLI (for mobile frontend)
 
-### 2. Booting Up
+### 2. Booting Up the Backend
 
-To run the full stack effortlessly utilizing docker containers for the database:
+The NestJS database connection and API lives inside the `backend/` folder.
 
 ```bash
-# Start just the database, or everything.
+cd backend
+
+# Start just the database using Docker
 docker-compose up -d db
 
 # Install Node modules
@@ -375,17 +378,35 @@ npm install
 npm run start:dev
 ```
 
-### 3. Seeding the Database
+### 3. Booting Up the Frontend
 
-In order to populate global templates (`Beginner's Workout` arrays) into your PostgreSQL container, run:
+The React Native / Expo mobile app lives in the `frontend/` folder.
 
 ```bash
+# Open a new terminal tab
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start the Expo bundler (Supports Web, iOS, Android)
+npx expo start --web
+```
+
+### 4. Seeding the Database
+
+In order to populate global templates (`Beginner's Workout` arrays) into your PostgreSQL container, run from the backend directory:
+
+```bash
+cd backend
 npm run seed:run
 # OR
 npm run seed
 ```
 
-### 4. Important NPM Scripts
+### 5. Important Backend NPM Scripts
+
+From the `backend/` directory:
 
 | Script | Description |
 | :--- | :--- | 
