@@ -192,24 +192,24 @@ When submitting multi-date availability templates from the client.
 
 ```mermaid
 flowchart TD
-    Req[POST /availability] --> Parse[Extract CreateAvailabilityDto]
-    Parse --> IsRepeat{isRepeat == true and <br> repeatDates has length?}
+    Req["POST /availability"] --> Parse["Extract CreateAvailabilityDto"]
+    Parse --> IsRepeat{"isRepeat == true and <br> repeatDates has length?"}
     
-    IsRepeat -- Yes --> BuildArray(Array = [date, ...repeatDates])
-    IsRepeat -- No --> BuildSingle(Array = [date])
+    IsRepeat -- "Yes" --> BuildArray["Array = [date, ...repeatDates]"]
+    IsRepeat -- "No" --> BuildSingle["Array = [date]"]
     
-    BuildArray --> Loop[Loop Dates]
+    BuildArray --> Loop["Loop Dates"]
     BuildSingle --> Loop
     
-    Loop --> Check[Check DB for clash:<br>same trainerId + date + startTime]
+    Loop --> Check["Check DB for clash:<br>same trainerId + date + startTime"]
     
-    Check -- Clash Found --> Throw409[Throw 409 ConflictException]
-    Check -- Clear --> Push[Push slot obj to createdSlots]
+    Check -- "Clash Found" --> Throw409["Throw 409 ConflictException"]
+    Check -- "Clear" --> Push["Push slot obj to createdSlots"]
     
-    Push --> NextDate{More dates?}
-    NextDate -- Yes --> Loop
-    NextDate -- No --> SaveDB[TypeORM repo.save(createdSlots)]
-    SaveDB --> Res[Return 201]
+    Push --> NextDate{"More dates?"}
+    NextDate -- "Yes" --> Loop
+    NextDate -- "No" --> SaveDB["TypeORM repo.save(createdSlots)"]
+    SaveDB --> Res["Return 201"]
 ```
 
 ### Double Booking Prevention
